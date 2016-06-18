@@ -4,9 +4,8 @@
 
 # Out-TShirt "C:\Users\Leon\dropbox\secretgeek\all_someday_projects\slackathon\out-tshirt\stupid_ideas_slackathon_logo.png"
 # "C:\Users\Leon\dropbox\secretgeek\all_someday_projects\slackathon\out-tshirt\stupid_ideas_slackathon_logo.png" | Out-TShirt
-# Example of an "Out-.." cmdLet i'm lifting structure from... https://gallery.technet.microsoft.com/scriptcenter/4208a159-a52e-4b99-83d4-8048468d29dd
 
-$postIt = $false;
+$postIt = $true;
 
 function Out-TShirt
 {
@@ -14,7 +13,7 @@ function Out-TShirt
     param([Parameter(Position=0, Mandatory=$true, ValueFromPipeline = $true)] [PSObject[]]$InputObject) 
 
     Begin {
-        if (!$env:Rapanui_API_key2) {
+        if (!$env:Rapanui_API_key) {
              Throw "You need to register and get an API key from rapanui, and save it as environment variable `$env:Rapanui_API_key = `"YOUR_API_KEY`" `nFollow this link and get the API Key - https://rapanuistore.com/`n`n "
         }
     }
