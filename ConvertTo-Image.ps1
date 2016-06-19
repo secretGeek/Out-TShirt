@@ -13,23 +13,21 @@ function ConvertTo-Image
         [parameter(Mandatory=$false)][alias("MT")][int]$MarginTop = 10,
         [parameter(Mandatory=$false)][alias("MB")][int]$MarginBottom = 10,
         [parameter(Mandatory=$false)][alias("HA")][ValidateSet('Near','Center','Far')][string]$HorizontalAlignment = "Center",
-        [parameter(Mandatory=$false)][alias("VA")][string]$VerticalAlignment = "Center"
+        [parameter(Mandatory=$false)][alias("VA")][ValidateSet('Near','Center','Far')][string]$VerticalAlignment = "Center"
     ) 
 
     Begin {
         Add-Type -AssemblyName System.Drawing
+        Add-Type -AssemblyName System.Windows.Forms
+
         #TODO: validate
-        #  horizontal alignment, vertical alignment, foregroundcolor, background color, fontname.
-        
+        #  foregroundcolor, background color, fontname.
     }    
 
     Process {    
-    
         foreach ($object in $InputObject) 
         { 
-            # From http://stackoverflow.com/questions/2067920/can-i-draw-create-an-image-with-a-given-text-with-powershell
             $filename1 = (Join-Path $psScriptRoot (([guid]::NewGuid().ToString())+".png"))
-            #TODO: If text contains newlines (is multi line) then alignment becomes important.
             $font = new-object System.Drawing.Font $FontName,$FontSize
             $textSize = [System.Windows.Forms.TextRenderer]::MeasureText($object, $font)
             # the size of the image is based on the measure size of the text, plus any margins.
@@ -49,23 +47,20 @@ function ConvertTo-Image
             $format.Alignment = [System.Drawing.StringAlignment]::$HorizontalAlignment; #Horizontal Alignment
             $format.LineAlignment = [System.Drawing.StringAlignment]::Center; # Vertical Alignment
             
-            #$alignmentOffsetLeft = $textSize.Width / 2;
-            #$alignmentOffsetTop = $textSize.Height / 2;
             switch ($HorizontalAlignment) 
             {
                 'Far' { $alignmentOffsetLeft = $textSize.Width }
                 'Near' { $alignmentOffsetLeft = 0 }
                 'Center' { $alignmentOffsetLeft = $textSize.Width /2 }
             }
+
             switch ($VerticalAlignment) 
             {
                 'Far' { $alignmentOffsetTop = $textSize.Height }
                 'Near' { $alignmentOffsetTop = 0 }
                 'Center' { $alignmentOffsetTop = $textSize.Height /2 }
             }
-            
-            
-            #$graphics.DrawString($object,$font,$brushFg,$marginLeft,$marginTop,$format) 
+
             $graphics.DrawString($object,$font,$brushFg,$marginLeft+$alignmentOffsetLeft, $marginTop+$alignmentOffsetTop,$format) 
             $graphics.Dispose() 
             $bmp1.Save($filename1) 
@@ -73,5 +68,3 @@ function ConvertTo-Image
         }
     }
 }
-
-#Invoke-Item $filename1 

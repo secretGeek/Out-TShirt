@@ -1,10 +1,3 @@
-#TODO: generate image from string
-#$path = "C:\Users\Leon\dropbox\secretgeek\all_someday_projects\slackathon\out-tshirt\stupid_ideas_slackathon_logo.png"
-#$base64_image = [convert]::ToBase64String((get-content $path -encoding byte))
-
-# Out-TShirt "C:\Users\Leon\dropbox\secretgeek\all_someday_projects\slackathon\out-tshirt\stupid_ideas_slackathon_logo.png"
-# "C:\Users\Leon\dropbox\secretgeek\all_someday_projects\slackathon\out-tshirt\stupid_ideas_slackathon_logo.png" | Out-TShirt
-
 $postIt = $true;
 
 function Out-TShirt
