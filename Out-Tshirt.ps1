@@ -47,7 +47,7 @@ function Out-TShirt
                 api_key = $env:Rapanui_API_key; 
                 base64_image = $base64_image;
                 item_code = $ProductCode; 
-                color = $TShirtColor; # can be $allowedColors
+                colour = $TShirtColor; # can be $allowedColors
                 currency_code = $CurrencyCode; # can be GBP, USD*, EUR, RUB
                 price_tier = $PriceTier; # can be "low","standard"*,"high"
             }
